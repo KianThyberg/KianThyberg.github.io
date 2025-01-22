@@ -2,24 +2,11 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <style>
-            body{
-                font-family: serif;
-                background-color: aliceblue;
-                color: #304080;
-            }
-            h1{
-                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-                background-color:rgb(198, 241, 255);
-            }
-            h2{
-                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            }
-            
-        </style>
+        <title>Kian Thyberg Portfolio</title>
+        <link rel="stylesheet" href="stylesheets/style.css">
     </head>
-    <body>
-        <h1>Kian Thyberg JS Portfolio</h1>
+    <body id="pageBody">
+        <h1 id="mainHdr">Kian Thyberg JS Portfolio</h1>
         <h2>Introduction</h2>
         <p>
             Good evening. My name is Kian Thyberg, and I'm a
@@ -39,6 +26,13 @@
             I'm a big fan of the Beatles extended discography, as well as
             all other types of music.</p>
 
+        <h3>Site Settings</h3>
+        <h4 id="themeIndicator">Display Theme (Current: Default)</h4>
+
+        <button onclick="changeTheme(0)" id="defThemeBtn">Sky Blue (Default)</button>
+        <button onclick="changeTheme(1)" id="lgtThemeBtn">Basic Light</button>
+        <button onclick="changeTheme(2)" id="drkThemeBtn">Basic Dark</button>
+
         <h2>Javascript Projects</h2>
         <p>
             This portion of the website still under construction. Come back
@@ -47,5 +41,37 @@
 
         <p>&copy;2025 Kian R Thyberg, All Rights Reserved</p>
         
+        <script>
+            function changeTheme(themeIndex){
+                //make sure the input is a number first
+                if (typeof(themeIndex) == "number"){
+                    switch (themeIndex){
+                        case 0: //default scheme
+                            document.getElementById('pageBody').style = 'background-color: aliceblue; color: #304080;';
+                            document.getElementById('mainHdr').style = 'background-color: #c6f1ff;';
+                            document.getElementById('themeIndicator').innerHTML = 'Display Theme (Current: Default)';
+                            break;
+
+                        case 1: //light scheme
+                            document.getElementById('pageBody').style = 'background-color: white; color: black;';
+                            document.getElementById('mainHdr').style = 'background-color: aliceblue;';
+                            document.getElementById('themeIndicator').innerHTML = 'Display Theme (Current: Light)';
+                            break;
+
+                        case 2: //dark scheme
+                            document.getElementById('pageBody').style = 'background-color: #0d0d20; color: #edfaff';
+                            document.getElementById('mainHdr').style = 'background-color: darkslategrey;';
+                            document.getElementById('themeIndicator').innerHTML = 'Display Theme (Current: Dark)';
+                            break;
+
+                        default:
+                            document.getElementById('pageBody').style = 'background-color: aliceblue; color: #304080;';
+                            document.getElementById('mainHdr').style = 'background-color: #c6f1ff;';
+                            document.getElementById('themeIndicator').innerHTML = 'Display Theme (Current: Default)';
+                            break;
+                    }
+                }
+            }
+        </script>
     </body>
 </html>

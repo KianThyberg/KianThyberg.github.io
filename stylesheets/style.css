@@ -1,0 +1,29 @@
+body{
+    font-family: serif;
+    background-color: aliceblue;
+    color: #304080;
+}
+h1{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #c6f1ff;
+}
+h2{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+button{
+    background-color: lightgrey;
+    transition-duration: 0.4s;
+}
+
+#defThemeBtn:hover{
+    background-color: #c6f1ff;
+}
+
+#lgtThemeBtn:hover{
+    background-color: white;
+}
+
+#drkThemeBtn:hover{
+    background-color: #0d0d20;
+    color: #edfaff;
+}
