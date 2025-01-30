@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Shape Calculator</title>
+        <link rel="stylesheet" href="../stylesheets/style.css">
+
+        <script>
+            let rounding = true;
+
+            function ToggleRounding(){
+                rounding = !rounding;
+                if (rounding){
+                    document.getElementById("roundIndicator").innerHTML = "(Rounding On)";
+                }
+                else{
+                    document.getElementById("roundIndicator").innerHTML = "(Rounding Off)";
+                }
+            }
+
+            function CalculateCircle(){
+                let radius = Number(document.getElementById("circInput").value);
+                
+                let perimeter = 2 * radius * Math.PI;
+                let area = Math.PI * radius * radius;
+
+                if (rounding){
+                    perimeter = perimeter.toFixed(2);
+                    area = area.toFixed(2);
+                }
+
+                document.getElementById("circPerimText").innerHTML = "Circle Perimeter: " + perimeter;
+                document.getElementById("circAreaText").innerHTML = "Circle Area: " + area;
+            }
+
+            function CalculateSphere(){
+                let radius = Number(document.getElementById("sphereInput").value);
+                
+                let surfaceArea = 4 * Math.PI * radius * radius;
+                let volume = (4 / 3) * Math.PI * (radius ** 3);
+
+                if (rounding){
+                    surfaceArea = surfaceArea.toFixed(2);
+                    volume = volume.toFixed(2);
+                }
+
+                document.getElementById("sphereSAText").innerHTML = "Sphere Surface Area: " + surfaceArea;
+                document.getElementById("sphereVolText").innerHTML = "Sphere Volume: " + volume;
+            }
+
+            function CalculateCylinder(){
+                let radius = Number(document.getElementById("cylinderRadInput").value);
+                let height = Number(document.getElementById("cylinderHgtInput").value);
+                
+                let surfaceArea = (2 * Math.PI * radius * height) + (2 * Math.PI * radius * radius);
+                let volume = Math.PI * height * radius * radius;
+
+                if (rounding){
+                    surfaceArea = surfaceArea.toFixed(2);
+                    volume = volume.toFixed(2);
+                }
+
+                document.getElementById("cylinderSAText").innerHTML = "Cylinder Surface Area: " + surfaceArea;
+                document.getElementById("cylinderVolText").innerHTML = "Cylinder Area: " + volume;
+            }
+        </script>
+    </head>
+    <body id="pageBody">
+        <!--Intro-->
+        <h1>Shape Calculator</h1>
+        
+        <p>
+            Ever needed to find the area or volume of shapes
+            derived from circles? Well, you're in luck!
+        </p>
+
+        <p id="roundIndicator">(Rounding On)</p>
+
+        <button onclick="ToggleRounding()">Toggle Rounding</button>
+
+        <br>
+
+        <img src="../images/CircleDiagram.png" alt="formulas to calculate perimeter and area of a circle" width="300" height="300">
+        
+        <br>
+
+        <p id="circPerimText">Circle Perimeter:</p>
+        <p id="circAreaText">Circle Area: </p>
+
+        <input id="circInput" type="number" placeholder="Circle Radius">
+        <button onclick="CalculateCircle()">Calculate</button>
+
+        <br>
+        <br>
+
+        <img src="../images/SphereDiagram.png" alt="formulas to calculate surface area and volume of a sphere" width="300" height="300">
+
+        <br>
+
+        <p id="sphereSAText">Sphere Surface Area: </p>
+        <p id="sphereVolText">Sphere Volume: </p>
+
+        <input id="sphereInput" type="number" placeholder="Sphere Radius">
+        <button onclick="CalculateSphere()">Calculate</button>
+
+        <br>
+        <br>
+
+        <img src="../images/CylinderDiagram.png" alt="formulas to calculate surface area and volume of a cylinder" width="300" height="300">
+
+        <br>
+
+        <p id="cylinderSAText">Cylinder Surface Area: </p>
+        <p id="cylinderVolText">Cylinder Volume: </p>
+
+        <input id="cylinderRadInput" type="number" placeholder="Cylinder Radius">
+        <br>
+        <input id="cylinderHgtInput" type="number" placeholder="Cylinder Height">
+        <button onclick="CalculateCylinder()">Calculate</button>
+
+        <p>&copy;2025 Kian R Thyberg, All Rights Reserved</p>
+    </body>
+</html>
