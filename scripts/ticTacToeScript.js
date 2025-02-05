@@ -31,6 +31,7 @@ function checkWin() {
     let b3 = document.getElementById("b3").innerHTML;
     let c3 = document.getElementById("c3").innerHTML;
     
+    //This would be like 3 lines with a nested for loop but I guess thats how it goes
     if (a1 == b1 && b1 == c1 && a1 == "X") {
         document.getElementById("resultText").innerHTML = "X wins!";
         isGameOver = true;
