@@ -13,6 +13,7 @@ h2{
 button{
     background-color: white;
     transition-duration: 0.4s;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 button:hover{
@@ -26,4 +27,15 @@ button:hover{
 #drkThemeBtn:hover{
     background-color: #0d0d20;
     color: #edfaff;
+}
+
+#resetBtn{
+    background-color: crimson;
+    color: white;
+    font-size: 25px;
+}
+
+#resetBtn:hover{
+    background-color: white;
+    color: crimson;
 }
