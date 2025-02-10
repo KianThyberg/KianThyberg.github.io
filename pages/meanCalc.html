@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../stylesheets/style.css">
+        <script src="../scripts/meanCalc.js"></script>
+        <title>Arithmetic Mean Calculator</title>
+    </head>
+    <body>
+        <h1>Arithmetic Mean Calculator</h1>
+
+        <h2>Set Up Data:</h2>
+        <p>Note: only numerical values permitted</p>
+        <p>Note: remove button only removes first instance of value</p>
+
+        <br>
+        <p>
+            Enter value:
+            <input id="numInput" type="text">
+            <button id="addBtn" onclick="addData()">Add Value</button>
+            <button id="rmvBtn" onclick="removeData()">Remove Value</button>
+        </p>
+
+        <h2>Current Dataset: </h2>
+        <div id="dataset"></div>
+
+        <br>
+        <h2>Current Mean: </h2>
+        <div id="mean"></div>
+    </body>
+</html>
