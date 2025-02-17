@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Memory Match</title>
+        <style>
+            .tile {
+                font-size: 10px;
+                width: 50px;
+                height: 50px;
+                line-height: 50px; 
+                background-color: white;
+                text-align: center;
+            }
+            td {
+                width: 55px;
+                height: 55px;
+            }
+            p {
+                line-height: 0;
+            }
+            #timer {
+                text-align: center;
+                font-size: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="../stylesheets/style.css">
+    </head>
+
+    <body>
+
+        <h1>Welcome to Memory Match</h1>
+
+        <h2>Settings:</h2>
+        
+        <h3>Board Size:</h3>
+        <p>
+            Small
+            <input type="radio" name="size" id="smRad">
+        </p>
+        <p>
+            Medium
+            <input type="radio" name="size" id="mdRad" checked>
+        </p>
+        <p>
+            Large
+            <input type="radio" name="size" id="lgRad">
+        </p>
+
+        <h3>Timer:</h3>
+        <p>
+            Enable Timer: 
+            <input type="checkbox" name="time" id="timeBox" value="Enable Timer">
+            <div id="timer"></div>
+        </p>
+
+        <p><button onclick='gameReset()'>Reset Game</button></p>
+        
+        <div id='gameBoard'></div>
+        
+        <script>
+        let map = [];
+        let timer = 0;
+        let timerInterval;
+        let remainingPairs = 0;
+        let tile1 = null, tile2 = null;
+
+        // given shuffle algorithm
+        const shuffle = (array) => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                let temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        }
+        
+        const loadMap = (cols = 4, rows = 4) => {
+            let maxPairCount = (cols * rows) / 2;
+            remainingPairs = maxPairCount;
+            let pairs = [];
+            
+
+            for (let i = 1; i <= maxPairCount; i++){
+                pairs.push(i, i);
+            }
+
+            pairs = shuffle(pairs);
+
+            for (let i = 0; i < rows; i++){
+                let row = [];
+                for (let n = 0; n < cols; n++){
+                    row.push(pairs.splice(0,1)[0]);
+                }
+                map.push(row);
+            }
+        }
+
+        const makeBoard = (cols = 4, rows = 4) => {
+            let output = '<table>';
+            for (let row = 0; row < rows; row++) {
+                output += '<tr>';
+                for (let col = 0; col < cols; col++) {
+                    output += '<td><button' + ' class="tile"'
+                        + ' id="' + row + '_' + col + '"'
+                        + ' onclick="process(' + row + ',' + col + ')">'
+                        + '</button></td>';
+                }
+                output += '</tr>';
+            }
+            document.getElementById('gameBoard').innerHTML = output + '</table>';
+        }
+
+        const endTimer = () => {
+            clearInterval(timerInterval);
+
+            document.getElementById("timer").innerHTML = "<p>Completed In: " 
+            + String(Math.floor(timer / 60)).padStart(2,"0") + ":"
+            + String(timer % 60).padStart(2, "0") + "</p>";
+
+            timer = 0;
+        }
+
+        const checkMatch = () => {
+            if (tile1.innerHTML == tile2.innerHTML){
+                tile1.hidden = true;
+                tile2.hidden = true;
+                remainingPairs--;
+                if (remainingPairs == 0){
+                    endTimer();
+                }
+            }
+            tile1.innerHTML = '';
+            tile1.style = "color: black; font-size:10px";
+            tile2.innerHTML = '';
+            tile2.style = "color: black; font-size:10px";
+            tile1 = tile2 = null;
+        }
+
+        const recolorTiles = () => {
+            if (tile1.innerHTML == tile2.innerHTML) {
+                tile1.style = "color: #42f593; font-size:35px";
+                tile2.style = "color: #42f593; font-size:35px";
+            }
+            else{
+                tile1.style = "color: #f54242; font-size:35px";
+                tile2.style = "color: #f54242; font-size:35px";
+            }
+            setTimeout(checkMatch, 500);
+        }
+
+        const process = (row, col) => {
+            let clicked_tile = document.getElementById(row + '_' + col);
+            // Clicked tile not already contains data
+            if (!Boolean(clicked_tile.innerHTML)){
+
+                // Tile 1 not yet selected
+                if (!tile1) {
+                    tile1 = clicked_tile;
+                    clicked_tile.innerHTML = map[row][col];
+                    clicked_tile.style = "color:#7bb2f7; font-size:30px";
+                }
+                
+                // Tile 2 not yet selected
+                else if (!tile2) {
+                    tile2 = clicked_tile;
+                    clicked_tile.innerHTML = map[row][col];
+                    setTimeout(recolorTiles, 500);
+                    clicked_tile.style = "color:#7bb2f7; font-size:30px";
+                }
+            }
+        }
+
+        const timerTick = function(){
+            timer++;
+            document.getElementById("timer").innerHTML = "<p>Time Elapsed: " 
+            + String(Math.floor(timer / 60)).padStart(2,"0") + ":"
+            + String(timer % 60).padStart(2, "0") + "</p>";
+        }
+
+        function gameReset(){
+            map = [];
+            timer = 0;
+            remainingPairs = 0;
+            tile1 = null;
+            tile2 = null;
+            clearInterval(timerInterval);
+
+            if (document.getElementById("smRad").checked){
+                loadMap(4, 4);
+                makeBoard(4, 4);
+            }
+            else if (document.getElementById("mdRad").checked){
+                loadMap(5,4);
+                makeBoard(5, 4);
+            }
+            else if (document.getElementById("lgRad").checked){
+                loadMap(6, 5);
+                makeBoard(6, 5);
+            }
+
+            if (document.getElementById("timeBox").checked){
+                document.getElementById("timer").innerHTML = "<p>Time Elapsed: 00:00</p>";
+                timerInterval = setInterval(timerTick, 1000);
+            }
+            else{
+                document.getElementById("timer").innerHTML = "";
+            }
+        }
+        
+        </script>
+        
+    </body>
+    
+</html>
