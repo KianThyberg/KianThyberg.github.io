@@ -62,6 +62,7 @@
         let map = [];
         let timer = 0;
         let timerInterval;
+        let isTimerOn = false;
         let remainingPairs = 0;
         let tile1 = null, tile2 = null;
 
@@ -128,7 +129,13 @@
                 tile2.hidden = true;
                 remainingPairs--;
                 if (remainingPairs == 0){
-                    endTimer();
+                    if (isTimerOn){
+                        endTimer();
+                    }
+                    else{
+                        document.getElementById("timer").innerHTML = "<p>" +
+                        "Puzzle Complete!</p>"
+                    }
                 }
             }
             tile1.innerHTML = '';
@@ -201,10 +208,12 @@
             }
 
             if (document.getElementById("timeBox").checked){
+                isTimerOn = true;
                 document.getElementById("timer").innerHTML = "<p>Time Elapsed: 00:00</p>";
                 timerInterval = setInterval(timerTick, 1000);
             }
             else{
+                isTimerOn = false;
                 document.getElementById("timer").innerHTML = "";
             }
         }
