@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DOM Puzzle</title>
+    <style>
+        /* NOTE: Do NOT modify this stylesheet */
+        #puzzle {
+            width: 500px;
+            height: 500px;
+            border: 5px solid black;
+        }
+    </style>
+</head>
+<body>
+    <!-- NOTE: Do NOT modify the body or div -->
+    <div id='puzzle'></div>
+
+    <script>
+        // All puzzle code must be implemented here
+        // Title
+        const titleText = document.createElement("h1");
+        titleText.textContent = "DOM Puzzle";
+        document.body.insertBefore(titleText, document.getElementById("puzzle"));
+
+        // Description
+        const descText = document.createElement("p");
+        descText.textContent = "This page was created almost entirely with javascript commands!";
+        document.body.appendChild(descText);
+
+        // Puzzle
+        // Background
+        const puzzleBox = document.getElementById("puzzle");
+        puzzleBox.style.position = "relative";
+        puzzleBox.style.backgroundColor = "#7338A0";
+
+        // Buttons
+        const createButton = function(color, text, buttonWidth, buttonHeight, xOffset, yOffset, toAppend = puzzleBox, ...classNames){
+            const newButton = document.createElement("button");
+            newButton.style.textAlign = "center";
+            newButton.style.color = "white";
+            newButton.style.position = "absolute";
+
+            newButton.style.backgroundColor = color;
+            newButton.textContent = text;
+
+            newButton.style.width = buttonWidth;
+            newButton.style.height = buttonHeight;
+            
+            newButton.style.left = xOffset;
+            newButton.style.top = yOffset;
+
+            for (let name of classNames){
+                if (!newButton.classList.contains(name)){
+                    newButton.classList.add(name);
+                }
+            }
+
+            toAppend.appendChild(newButton);
+        }
+
+        //Big Buttons
+        createButton("#9455F4","A","125px","125px","0px","0px");
+        createButton("#4A2B74","B","125px","125px","126px","0px");
+        createButton("#594492","C","125px","125px","0px","126px");
+        createButton("#854DDC","D","125px","125px","126px","126px");
+
+        //Small Button
+        for (let row = 0; row < 10; row++){
+            for (let col = 0; col < 10; col++){
+                let xOffset = (250 + (25*col)) + "px";
+                let yOffset = (250 + (25*row)) + "px";
+                createButton("#C39CFE","","25px","25px",xOffset,yOffset,puzzleBox,"clickable-small","can-turn");
+            }
+        }
+
+        //Event Listeners
+        puzzleBox.addEventListener("mouseover",
+            () => {
+                puzzleBox.style.border = "5px solid #FF9E00";
+            }
+        );
+
+        puzzleBox.addEventListener("mouseout",
+            () => {
+                puzzleBox.style.border = "5px solid black";
+            }
+        );
+
+        puzzleBox.addEventListener("click",
+            (event) => {
+                if (event.target.classList.contains("clickable-small")){
+                    event.target.style.backgroundColor = "#4A2574";
+                    if (event.target.nextElementSibling != null && event.target.nextElementSibling.classList.contains("can-turn")){
+                        event.target.nextElementSibling.style.backgroundColor = "#FF9E00";
+                    }
+                    if (event.target.previousElementSibling != null && event.target.previousElementSibling.classList.contains("can-turn")){
+                        event.target.previousElementSibling.style.backgroundColor = "#FF9E00";
+                    }
+                }
+            }
+        );
+        
+    </script>
+</body>
+</html>
