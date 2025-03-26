@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Feedback</title>
+        <link rel="stylesheet" href="../stylesheets/style.css">
+    </head>
+    <body>
+        <h1>Provide Feedback</h1>
+        <p>
+            Welcome to the feedback section, where you can tell me how I've been doing
+            for all this time! Of course, I can't actually see what you write. 
+            (Yet.) You're free to be as impolite as you please! 
+        </p>
+
+        <br>
+
+        <form id="commentForm">
+            <label for="name">Name: </label>
+            <input id="name" type="text" autocomplete="username" pattern="[a-zA-Z\s]{1,}" placeholder="Your Name Here" title="Letters and spaces only." required>
+
+            <br><br>
+
+            <label for="phone">Phone #: </label>
+            <input id="phone" type="tel" pattern="[0-9\-]{12}" placeholder="555-555-5555" title="Please enter a valid phone number, separated by dashes. (eg. 555-555-5555)">
+            <label for="phone">(Optional)</label>
+
+            <br><br>
+
+            <label for="email">Email Address: </label>
+            <input id="email" type="email" autocomplete="email" placeholder="address@email.com" title="Please enter a valid email address. (eg. yourname@email.com)">
+            <label for="email">(Optional)</label>
+
+            <br><br>
+
+            <label for="comment">Your Feedback:</label>
+            <br>
+            <textarea id="comment" placeholder="Enter your feedback!" rows="4" cols="50"></textarea>
+
+            <br><br>
+            <hr>
+
+            <h2>Account Details:</h2>
+
+            <label for="username">Username: </label>
+            <input id="username" type="text" autocomplete="username" placeholder="Your Username Here" pattern="[a-zA-Z0-9_]{5,15}" title="5-15 Characters. Letters, Numbers, and Underscores only." required>
+
+            <br><br>
+
+            <label for="password">Password: </label>
+            <input id="password" type="text" placeholder="Your Password Here" pattern=".{8,}" autocomplete="new-password" title="Password must contain an upper and lowercase letter, a special character, and a number." required>
+
+            <div id="userfeedback"></div>
+
+            <div id="passfeedback"></div>
+
+            <div id="userpassfeedback"></div>
+
+            <button id="submit" type="submit">Submit</button>
+        </form>
+
+        <script>
+            let userValid = false;
+            let passValid = false;
+            let userpassValid = false;
+            let recentForm = [];
+
+            // username validation
+            document.getElementById("username").addEventListener("input", (event) => {
+                let currentUser = document.getElementById("username").value;
+
+                const errors = [];
+
+                //check length
+                if (currentUser.length < 5){
+                    errors.push("Username is too short.");
+                }
+                else if (currentUser.length > 15){
+                    errors.push("Username is too long.");
+                }
+                
+                //check characters
+                let hasSpecial = /[!@#$%^\&\*\(\)\-_\+=\\|\[\]{}\;\:\'\"<>,./?`~]/.test(currentUser);
+                if (hasSpecial){
+                    errors.push("Username cannot contain special characters.");
+                }
+                if (currentUser.includes(" ")){
+                    errors.push("Username cannot contain spaces.");
+                }
+                
+                //display errors
+                let feedbackString = "<p class=\"feedback fadeInText\">";
+                for (let err of errors){
+                    feedbackString += err + "<br>";
+                }
+                feedbackString += "</p>"
+
+                if (feedbackString != document.getElementById("userfeedback").innerHTML){
+                    document.getElementById("userfeedback").innerHTML = feedbackString;
+                }
+
+                //set username validity
+                userValid = errors.length == 0;
+
+                //check for username in password
+                checkUserPass();
+            });
+
+            // password validation
+            document.getElementById("password").addEventListener("input", (event) => {
+                let currentUser = document.getElementById("username").value;
+                let currentPass = document.getElementById("password").value;
+
+                const errors = [];
+
+                //check length
+                if (currentPass.length < 8){
+                    errors.push("Password is too short.");
+                }
+
+                //check characters
+                let hasBothCaps = /[A-Z]/.test(currentPass) && /[a-z]/.test(currentPass);
+                if (!hasBothCaps){
+                    errors.push("Password should include lowercase and uppercase letters.");
+                }
+                let hasNumber = /[0-9]/.test(currentPass);
+                if (!hasNumber){
+                    errors.push("Password should include a number.");
+                }
+                let hasSpecial = /[!@#$%^\&\*\(\)\-_\+=\\|\[\]{}\;\:\'\"<>,./?`~]/.test(currentPass);
+                if (!hasSpecial){
+                    errors.push("Password should include a special character.")
+                }
+                if (currentPass.includes(" ")){
+                    errors.push("Password cannot include spaces.");
+                }
+
+                //display errors
+                let feedbackString = "<p class=\"feedback fadeInText\">";
+                for (let err of errors){
+                    feedbackString += err + "<br>";
+                }
+                feedbackString += "</p>"
+
+                if (feedbackString != document.getElementById("passfeedback").innerHTML){
+                    document.getElementById("passfeedback").innerHTML = feedbackString;
+                }
+
+                passValid = errors.length == 0;
+
+                //check for username in password
+                checkUserPass();
+
+                console.log(recentForm);
+            });
+
+            document.getElementById("submit").addEventListener("click", (event) => {
+                if (document.getElementById("commentForm").checkValidity()){
+                    if (!(passValid && userValid && userpassValid)){
+                        event.preventDefault();
+                    }
+                    else{
+                        //clear last form and fill with new information
+                        recentForm = [];
+                        recentForm.push(sanitizeString(document.getElementById("name").value));
+                        recentForm.push(sanitizeString(document.getElementById("phone").value));
+                        recentForm.push(sanitizeString(document.getElementById("email").value));
+                        recentForm.push(sanitizeString(document.getElementById("comment").textContent));
+                        recentForm.push(sanitizeString(document.getElementById("username").value));
+                        recentForm.push(sanitizeString(document.getElementById("password").value));
+                    }
+                }
+            });
+
+            // generic function to check if password contains username
+            // check needs to happen when either field is updated
+            // returns true if the password is valid, false otherwise
+            function checkUserPass(){
+                let currentUser = document.getElementById("username").value;
+                let currentPass = document.getElementById("password").value;
+                
+                
+                let errorString = "<p class=\"feedback fadeInText\">"
+
+                //only bring up error if both have text already
+                if (currentUser && currentPass){
+                    if (currentPass.includes(currentUser)){
+                        errorString += "Password cannot contain your username.";
+                        userpassValid = false;
+                    }
+                    else{
+                        userpassValid = true;
+                    }
+                }
+                errorString += "</p>"
+
+                if (document.getElementById("userpassfeedback").innerHTML != errorString){
+                    document.getElementById("userpassfeedback").innerHTML = errorString;
+                }
+            }
+
+            // generic function to replace " ' < > & with sanitized characters
+            function sanitizeString(string){
+                return string.replace(/</g, "&lt").replace(/>/g, "&gt").replace(/"/, "&quot").replace(/'/, "&apos").replace(/&/, "&amp");
+            }
+        </script>
+    </body>
+</html>

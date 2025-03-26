@@ -39,3 +39,22 @@ button:hover{
     background-color: white;
     color: crimson;
 }
+
+.feedback{
+    color: crimson;
+}
+
+.fadeInText{
+    opacity: 1;
+    animation-name: fadeInText;
+    animation-duration: 500ms;
+}
+
+@keyframes fadeInText{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
