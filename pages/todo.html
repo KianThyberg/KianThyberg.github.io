@@ -23,7 +23,7 @@
         <script>
             document.getElementById("listArea").addEventListener("click", (event) => {
                 if (event.target.classList.contains("deleteable")){
-                    removeLocalStorage(getTextFromTask(event.target.parentNode.textContent));
+                    removeLocalStorage(event.target.parentNode.textContent);
                     console.log(event.target.parentNode.textContent);
                     document.getElementById("listArea").removeChild(event.target.parentNode.parentNode);
                 }
