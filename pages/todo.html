@@ -93,7 +93,6 @@
                 }
 
                 //cookies
-                console.log(document.cookie);
                 let currentTheme = getCookie("theme");
                 currentTheme = currentTheme ? currentTheme : 1;
                 changeTheme(currentTheme);
@@ -156,7 +155,6 @@
                 let expiration = new Date();
                 expiration.setTime(expiration.getTime() + (24 * 60 * 60 * 1000));
                 let cookieString = "theme=" + theme + "; expires=" + expiration.toUTCString() + "; path=/;";
-                console.log(document.cookie);
                 document.cookie = cookieString;
             }
 
