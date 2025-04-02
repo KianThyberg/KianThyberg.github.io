@@ -66,7 +66,7 @@
 
             function createTask(){
                 let task = sanitizeString(document.getElementById("taskInput").value);
-                if (task){
+                if (task.length > 0 && task.length < 200){
                     if (!checkTaskDuplicate(task)){
                         let listArea = document.getElementById("listArea");
                         let newTaskDiv = document.createElement("div");
@@ -93,6 +93,9 @@
                     else {
                         document.getElementById("dupeWarning").textContent = "Duplicate tasks not allowed.";
                     }
+                }
+                else if (task.length > 200) {
+                    document.getElementById("dupeWarning").textContent = "Task is too long. Tasks cannot exceed 200 characters.";
                 }
             }
 
