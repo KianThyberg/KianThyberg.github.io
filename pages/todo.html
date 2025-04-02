@@ -156,9 +156,7 @@
                 
                 //set theme in cookies
                 let expiration = new Date();
-                console.log(expiration);
-                expiration.setTime(expiration.getTime + (24 * 60 * 60 * 1000));
-                console.log(expiration);
+                expiration.setTime(expiration.getTime() + (24 * 60 * 60 * 1000));
                 let cookieString = "theme=" + theme + "; expires=" + expiration.toUTCString() + ";path=/;";
                 document.cookie = cookieString;
             }
