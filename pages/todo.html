@@ -102,7 +102,7 @@
             function clearStorage(){
                 localStorage.clear();
                 sessionStorage.clear();
-                document.cookie = "theme=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;";
+                document.cookie = "theme=;expires=Thu, 01 Jan 1970 00:10:00 UTC;path=/;";
                 window.location.reload();
             }
 
@@ -156,7 +156,7 @@
                 //set theme in cookies
                 let expiration = new Date();
                 expiration.setTime(expiration.getTime() + (24 * 60 * 60 * 1000));
-                let cookieString = "theme=" + theme + "; expires=" + expiration.toUTCString() + ";path=/;";
+                let cookieString = "theme=" + theme + "; expires=" + expiration.toUTCString() + "; path=/;";
                 document.cookie = cookieString;
                 console.log(document.cookie);
                 console.log(cookieString);
