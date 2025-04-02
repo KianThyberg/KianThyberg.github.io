@@ -12,6 +12,8 @@
             you left it! Click "Complete Task" to remove them.
         </p>
 
+        <h3 id="sessionCount"></h3>
+
         <button onclick="clearStorage()">Clear Storage</button>
 
         <label for="taskInput">Enter your task here: </label>
@@ -48,6 +50,13 @@
                         document.getElementById("taskInput").value = "";
                     }
                 }
+                let currentCount = sessionStorage.getItem("count");
+                if (currentCount){
+                    document.getElementById("sessionCount").textContent = currentCount + " tasks have been created in this session.";
+                }
+                else {
+                    document.getElementById("sessionCount").textContent = "0 tasks have been created in this session.";
+                }
             }
 
             function clearStorage(){
@@ -60,7 +69,6 @@
                 if (task){
                     if (!checkTaskDuplicate(task)){
                         let listArea = document.getElementById("listArea");
-
                         let newTaskDiv = document.createElement("div");
 
                         newTaskDiv.innerHTML += "<p>" + task + " <button class=\"deleteable\">Complete Task!</button></p>";
@@ -71,6 +79,16 @@
                         document.getElementById("taskInput").value = "";
 
                         addLocalStorage(task);
+
+                        let currentCount = sessionStorage.getItem("count");
+                        if (currentCount){
+                            currentCount++;
+                            sessionStorage.setItem("count", currentCount);
+                        }
+                        else{
+                            sessionStorage.setItem("count", 1);
+                        }
+                        document.getElementById("sessionCount").textContent = currentCount + " tasks have been created in this session.";
                     }
                     else {
                         document.getElementById("dupeWarning").textContent = "Duplicate tasks not allowed.";
