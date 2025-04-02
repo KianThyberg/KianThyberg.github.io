@@ -97,7 +97,7 @@
 
             // Takes the content of a task from the list and returns only the text
             function getTextFromTask(taskContent){
-                return taskContent.slice(taskContent.length - "Complete Task!".length, "Complete Task!".length)
+                return taskContent.slice(0, taskContent.length - "Complete Task!".length)
             }
 
             // generic function to replace " ' < > & with sanitized characters
