@@ -23,8 +23,8 @@
         <script>
             document.getElementById("listArea").addEventListener("click", (event) => {
                 if (event.target.classList.contains("deleteable")){
-                    removeLocalStorage(event.target.parentNode.textContent);
-                    console.log(event.target.parentNode.textContent);
+                    removeLocalStorage(event.target.previousElementSibling.textContent);
+                    console.log(event.target.previousElementSibling.textContent);
                     document.getElementById("listArea").removeChild(event.target.parentNode.parentNode);
                 }
             });
@@ -35,7 +35,15 @@
                     let listArea = document.getElementById("listArea");
                     for (let task of currentStorage){
                         let newTaskDiv = document.createElement("div");
-                        newTaskDiv.innerHTML += "<p>" + task + " <button class=\"deleteable\">Complete Task!</button></p>";
+
+                        let newTaskP = document.createElement("p");
+                        newTaskP.textContent = task;
+                        newTaskDiv.appendChild(newTaskP);
+
+                        let newTaskButton = document.createElement("button");
+                        newTaskButton.textContent = "Complete Task!";
+                        newTaskButton.classList.add("deleteable");
+                        newTaskDiv.appendChild(newTaskButton);
 
                         listArea.appendChild(newTaskDiv);
 
@@ -46,6 +54,7 @@
 
             function clearStorage(){
                 localStorage.removeItem("tasks");
+                window.location.reload();
             }
 
             function createTask(){
@@ -55,7 +64,14 @@
 
                     let newTaskDiv = document.createElement("div");
 
-                    newTaskDiv.innerHTML += "<p>" + task + " <button class=\"deleteable\">Complete Task!</button></p>";
+                    let newTaskP = document.createElement("p");
+                    newTaskP.textContent = task;
+                    newTaskDiv.appendChild(newTaskP);
+
+                    let newTaskButton = document.createElement("button");
+                    newTaskButton.textContent = "Complete Task!";
+                    newTaskButton.classList.add("deleteable");
+                    newTaskDiv.appendChild(newTaskButton);
 
                     console.log(newTaskDiv);    
                     listArea.appendChild(newTaskDiv);
