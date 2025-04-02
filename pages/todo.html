@@ -12,9 +12,14 @@
             you left it! Click "Complete Task" to remove them.
         </p>
 
-        <h3 id="sessionCount"></h3>
+        <p>
+            Note: this page saves your tasks and preferences using cookies, among other
+            methods. To clear all stored data, click the "Clear Storage" button.
+        </p>
 
         <button onclick="clearStorage()">Clear Storage</button>
+
+        <h3 id="sessionCount"></h3>
 
         <label for="taskInput">Enter your task here: </label>
         <input type="text" id="taskInput">
@@ -23,6 +28,13 @@
         <div id="listArea"></div>
 
         <p id="dupeWarning" class="feedback fadeInText"></p>
+
+        <br><br><hr>
+
+        <h2>Change your Theme!</h2>
+
+        <button id="lgtThemeBtn" onclick="changeTheme(true)">Light Mode</button>
+        <button id="drkThemeBtn" onclick="changeTheme(false)">Dark Mode</button>
 
         <script>
             document.getElementById("listArea").addEventListener("click", (event) => {
@@ -38,6 +50,7 @@
             });
 
             window.onload = function(){
+                //local storage
                 let currentStorage = JSON.parse(localStorage.getItem("tasks"));
                 if (currentStorage){
                     let listArea = document.getElementById("listArea");
@@ -50,6 +63,8 @@
                         document.getElementById("taskInput").value = "";
                     }
                 }
+
+                //session storage
                 let currentCount = sessionStorage.getItem("count");
                 if (currentCount){
                     document.getElementById("sessionCount").textContent = currentCount + " tasks have been created in this session.";
@@ -57,10 +72,17 @@
                 else {
                     document.getElementById("sessionCount").textContent = "0 tasks have been created in this session.";
                 }
+
+                //cookies
+                let currentTheme = getCookie("theme");
+                currentTheme = currentTheme ? currentTheme : true;
+                changeTheme(currentTheme);
             }
 
             function clearStorage(){
-                localStorage.removeItem("tasks");
+                localStorage.clear();
+                sessionStorage.clear();
+                document.cookie = "theme=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;"
                 window.location.reload();
             }
 
@@ -97,6 +119,21 @@
                 else if (task.length > 200) {
                     document.getElementById("dupeWarning").textContent = "Task is too long. Tasks cannot exceed 200 characters.";
                 }
+            }
+
+            function changeTheme(theme){
+                if (theme){
+                    document.body.style.backgroundColor = "#c6f1ff";
+                }
+                else {
+                    document.body.style.backgroundColor = "#0d0d20";
+                }
+                
+                //set theme in cookies
+                let expiration = new Date();
+                expiration.setTime(expiration.getTime + (24 * 60 * 60 * 1000));
+                let cookieString = "theme=" + theme + "; expires=" + expiration.toUTCString() + ";";
+                document.cookie = cookieString;
             }
 
             function addLocalStorage(task){
@@ -137,6 +174,17 @@
             // generic function to replace " ' < > & with sanitized characters
             function sanitizeString(string){
                 return string.replace(/</g, "&lt").replace(/>/g, "&gt").replace(/"/, "&quot").replace(/'/, "&apos").replace(/&/, "&amp");
+            }
+
+            // generic function to get the value of a cookie
+            function getCookie(name){
+                let cookies = document.cookie.split(";");
+                for (cookie of cookies){
+                    cookie = cookie.trim();
+                    if (cookie.startsWith(name + "=")){
+                        return cookie.substring(name.length + 1);
+                    }
+                }
             }
         </script>
     </body>
