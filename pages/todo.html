@@ -73,7 +73,7 @@
                     currentStorage = [];
                 }
                 currentStorage.push(task);
-                localStorage.setItem("tasks", currentStorage);
+                localStorage.setItem("tasks", JSON.stringify(currentStorage));
                 
             }
 
@@ -83,7 +83,7 @@
                     if (currentStorage.includes(task)){
                         currentStorage.splice(currentStorage.indexOf(task), 1);
                     }
-                    localStorage.setItem("tasks", currentStorage);
+                    localStorage.setItem("tasks", JSON.stringify(currentStorage));
                 }
             }
 
