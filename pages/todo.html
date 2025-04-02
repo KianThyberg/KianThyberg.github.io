@@ -29,7 +29,7 @@
             });
 
             window.onload = function(){
-                let currentStorage = localStorage.getItem("tasks");
+                let currentStorage = JSON.parse(localStorage.getItem("tasks"));
                 if (currentStorage){
                     let listArea = document.getElementById("listArea");
                     for (let task of currentStorage){
@@ -67,14 +67,13 @@
             }
 
             function addLocalStorage(task){
-                let currentStorage = localStorage.getItem("tasks");
+                let currentStorage = JSON.parse(localStorage.getItem("tasks"));
                 console.log(currentStorage);
                 if (!currentStorage){
                     currentStorage = [];
                 }
                 currentStorage.push(task);
                 localStorage.setItem("tasks", JSON.stringify(currentStorage));
-                
             }
 
             function removeLocalStorage(task){
