@@ -68,11 +68,13 @@
 
             function addLocalStorage(task){
                 let currentStorage = localStorage.getItem("tasks");
+                console.log(currentStorage);
                 if (!currentStorage){
                     currentStorage = [];
                 }
                 currentStorage.push(task);
                 localStorage.setItem("tasks", currentStorage);
+                
             }
 
             function removeLocalStorage(task){
