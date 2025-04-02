@@ -125,10 +125,12 @@
                 if (theme == 1){
                     document.body.style.backgroundColor = "aliceblue";
                     document.body.style.color = "#304080";
+                    document.querySelector("h1").style.backgroundColor = "#c6f1ff";
                 }
                 else {
                     document.body.style.backgroundColor = "#0d0d20";
                     document.body.style.color = "#edfaff";
+                    document.querySelector("h1").style.backgroundColor = "darkslategrey";
                 }
                 
                 //set theme in cookies
@@ -175,7 +177,7 @@
 
             // generic function to replace " ' < > & with sanitized characters
             function sanitizeString(string){
-                return string.replace(/</g, "&lt").replace(/>/g, "&gt").replace(/"/, "&quot").replace(/'/, "&apos").replace(/&/, "&amp");
+                return string.replace(/</g, "&lt").replace(/>/g, "&gt").replace(/"/g, "&quot").replace(/'/g, "&apos").replace(/&/g, "&amp");
             }
 
             // generic function to get the value of a cookie
