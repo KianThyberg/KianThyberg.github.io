@@ -157,9 +157,8 @@
             async function getDog(){
                 try{
                     let response = await fetch("https://dog.ceo/api/breeds/image/random");
-                    let dog = await response.JSON;
-
-                    console.log(JSON.stringify(dog));
+                    
+                    console.log(response);
                     document.getElementById("dogArea").innerHTML = "";
                 }
                 catch (error){
