@@ -12,6 +12,8 @@
             you left it! Click "Complete Task" to remove them.
         </p>
 
+        <button onclick="clearStorage()">Clear Storage</button>
+
         <label for="taskInput">Enter your task here: </label>
         <input type="text" id="taskInput">
         <button id="submit" onclick="createTask()">Enter task</button>
@@ -31,6 +33,7 @@
                 if (currentStorage){
                     let listArea = document.getElementById("listArea");
                     for (let task of currentStorage){
+                        let newTaskDiv = document.createElement("div");
                         newTaskDiv.innerHTML += "<p>" + task + " <button class=\"deleteable\">Complete Task!</button></p>";
 
                         console.log(newTaskDiv);    
@@ -39,6 +42,10 @@
                         document.getElementById("taskInput").value = "";
                     }
                 }
+            }
+
+            function clearStorage(){
+                localStorage.removeItem("tasks");
             }
 
             function createTask(){
