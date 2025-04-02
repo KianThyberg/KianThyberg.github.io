@@ -36,6 +36,20 @@
         <button id="lgtThemeBtn" onclick="changeTheme(1)">Light Mode</button>
         <button id="drkThemeBtn" onclick="changeTheme(2)">Dark Mode</button>
 
+        <br><br><hr>
+
+        <h2>Dog Section</h2>
+
+        <p>
+            I've hired this dog to convince you to get your tasks done.
+        </p>
+
+        <div id="dogArea">
+            <p>
+                Loading dog...
+            </p>
+        </div>
+
         <script>
             document.getElementById("listArea").addEventListener("click", (event) => {
                 if (event.target.classList.contains("deleteable")){
@@ -138,6 +152,19 @@
                 expiration.setTime(expiration.getTime + (24 * 60 * 60 * 1000));
                 let cookieString = "theme=" + theme + "; expires=" + expiration.toUTCString() + ";";
                 document.cookie = cookieString;
+            }
+
+            async function getDog(){
+                try{
+                    let response = await fetch("https://dog.ceo/api/breeds/image/random");
+                    let dog = await response.JSON;
+
+                    console.log(JSON.stringify(dog));
+                    document.getElementById("dogArea").innerHTML = "";
+                }
+                catch (error){
+                    document.getElementById("dogArea").innerHTML = "<p>There was an error in the process of finding a dog.</p>";
+                }
             }
 
             function addLocalStorage(task){
