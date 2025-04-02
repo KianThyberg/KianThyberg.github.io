@@ -20,6 +20,8 @@
 
         <div id="listArea"></div>
 
+        <p id="dupeWarning" class="feedback fadeInText"></p>
+
         <script>
             document.getElementById("listArea").addEventListener("click", (event) => {
                 if (event.target.classList.contains("deleteable")){
@@ -27,6 +29,10 @@
                     console.log(event.target.parentNode.textContent);
                     document.getElementById("listArea").removeChild(event.target.parentNode.parentNode);
                 }
+            });
+
+            document.getElementById("taskInput").addEventListener("input", (event) => {
+                document.getElementById("dupeWarning").textContent = "";
             });
 
             window.onload = function(){
@@ -51,19 +57,24 @@
 
             function createTask(){
                 let task = sanitizeString(document.getElementById("taskInput").value);
-                if (task && !checkTaskDuplicate(task)){
-                    let listArea = document.getElementById("listArea");
+                if (task){
+                    if (!checkTaskDuplicate(task)){
+                        let listArea = document.getElementById("listArea");
 
-                    let newTaskDiv = document.createElement("div");
+                        let newTaskDiv = document.createElement("div");
 
-                    newTaskDiv.innerHTML += "<p>" + task + " <button class=\"deleteable\">Complete Task!</button></p>";
+                        newTaskDiv.innerHTML += "<p>" + task + " <button class=\"deleteable\">Complete Task!</button></p>";
 
-                    console.log(newTaskDiv);    
-                    listArea.appendChild(newTaskDiv);
+                        console.log(newTaskDiv);    
+                        listArea.appendChild(newTaskDiv);
 
-                    document.getElementById("taskInput").value = "";
+                        document.getElementById("taskInput").value = "";
 
-                    addLocalStorage(task);
+                        addLocalStorage(task);
+                    }
+                    else {
+                        document.getElementById("dupeWarning").textContent = "Duplicate tasks not allowed.";
+                    }
                 }
             }
 
