@@ -51,6 +51,8 @@
         </div>
 
         <script>
+            getDog();
+
             document.getElementById("listArea").addEventListener("click", (event) => {
                 if (event.target.classList.contains("deleteable")){
                     removeLocalStorage(event.target.parentNode.textContent);
