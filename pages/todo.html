@@ -87,7 +87,7 @@
             }
 
             function createTask(){
-                let task = document.getElementById("taskInput").value;
+                let task = sanitizeString(document.getElementById("taskInput").value);
                 if (task.length > 0 && task.length < 200){
                     if (!checkTaskDuplicate(task)){
                         let listArea = document.getElementById("listArea");
