@@ -95,7 +95,6 @@
                 //cookies
                 console.log(document.cookie);
                 let currentTheme = getCookie("theme");
-                console.log(currentTheme);
                 currentTheme = currentTheme ? currentTheme : 1;
                 changeTheme(currentTheme);
             }
@@ -115,8 +114,7 @@
                         let newTaskDiv = document.createElement("div");
 
                         newTaskDiv.innerHTML += "<p>" + task + " <button class=\"deleteable\">Complete Task!</button></p>";
-
-                        console.log(newTaskDiv);    
+   
                         listArea.appendChild(newTaskDiv);
 
                         document.getElementById("taskInput").value = "";
@@ -158,9 +156,8 @@
                 let expiration = new Date();
                 expiration.setTime(expiration.getTime() + (24 * 60 * 60 * 1000));
                 let cookieString = "theme=" + theme + "; expires=" + expiration.toUTCString() + "; path=/;";
-                document.cookie = cookieString;
                 console.log(document.cookie);
-                console.log(cookieString);
+                document.cookie = cookieString;
             }
 
             async function getDog(){
@@ -172,7 +169,6 @@
                 }
                 catch (error){
                     document.getElementById("dogArea").innerHTML = "<p>There was an error in the process of finding a dog.</p>";
-                    console.log(error);
                 }
             }
 
@@ -188,8 +184,6 @@
             function removeLocalStorage(task){
                 let taskText = getTextFromTask(task);
                 let currentStorage = JSON.parse(localStorage.getItem("tasks"));
-                console.log(currentStorage);
-                console.log(taskText);
                 if (currentStorage){
                     if (currentStorage.includes(taskText)){
                         currentStorage.splice(currentStorage.indexOf(taskText), 1);
