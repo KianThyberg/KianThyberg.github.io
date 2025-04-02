@@ -161,7 +161,7 @@
                     let response = await fetch("https://dog.ceo/api/breeds/image/random");
                     let dog = await response.json();
                     
-                    document.getElementById("dogArea").innerHTML = "<img src=\"" + dog.message + "\" alt=\"Dog\">";
+                    document.getElementById("dogArea").innerHTML = "<img src=\"" + dog.message + "\" alt=\"Dog\" width=\"300\" height=\"300\">";
                 }
                 catch (error){
                     document.getElementById("dogArea").innerHTML = "<p>There was an error in the process of finding a dog.</p>";
