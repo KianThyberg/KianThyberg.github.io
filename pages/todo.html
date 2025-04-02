@@ -160,6 +160,7 @@
                 try{
                     let response = await fetch("https://dog.ceo/api/breeds/image/random");
                     let dog = await response.JSON;
+                    console.log(dog);
                     
                     document.getElementById("dogArea").innerHTML = "<img src=\"" + JSON.stringify(dog.url) + "\" alt=\"Dog\">";
                 }
