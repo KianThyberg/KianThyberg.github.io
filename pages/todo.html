@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Kian Thyberg Portfolio</title>
+        <title>To Do List</title>
         <link rel="stylesheet" href="../stylesheets/style.css">
     </head>
     <body>
@@ -71,7 +71,7 @@
             function removeLocalStorage(task){
                 let currentStorage = localStorage.getItem("tasks");
                 if (currentStorage){
-                    if (currentStorage.contains(task)){
+                    if (currentStorage.includes(task)){
                         currentStorage.splice(currentStorage.indexOf(task), 1);
                     }
                     localStorage.setItem("tasks", currentStorage);
@@ -81,7 +81,7 @@
             function checkTaskDuplicate(task){
                 let currentStorage = localStorage.getItem("tasks");
                 if (currentStorage){
-                    return currentStorage.contains("task");
+                    return currentStorage.includes("task");
                 }
                 return false;
             }
