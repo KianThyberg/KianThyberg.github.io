@@ -80,8 +80,8 @@
                 let taskText = getTextFromTask(task);
                 let currentStorage = JSON.parse(localStorage.getItem("tasks"));
                 if (currentStorage){
-                    console.log(currentStorage);
                     if (currentStorage.includes(taskText)){
+                        console.log(currentStorage);
                         currentStorage.splice(currentStorage.indexOf(taskText), 1);
                     }
                     localStorage.setItem("tasks", JSON.stringify(currentStorage));
