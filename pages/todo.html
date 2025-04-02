@@ -60,7 +60,6 @@
             document.getElementById("listArea").addEventListener("click", (event) => {
                 if (event.target.classList.contains("deleteable")){
                     removeLocalStorage(event.target.parentNode.textContent);
-                    console.log(event.target.parentNode.textContent);
                     document.getElementById("listArea").removeChild(event.target.parentNode.parentNode);
                 }
             });
@@ -159,6 +158,7 @@
                 expiration.setTime(expiration.getTime() + (24 * 60 * 60 * 1000));
                 let cookieString = "theme=" + theme + "; expires=" + expiration.toUTCString() + ";path=/;";
                 document.cookie = cookieString;
+                console.log(document.cookie);
             }
 
             async function getDog(){
