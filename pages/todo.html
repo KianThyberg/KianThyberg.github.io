@@ -33,8 +33,8 @@
 
         <h2>Change your Theme!</h2>
 
-        <button id="lgtThemeBtn" onclick="changeTheme(true)">Light Mode</button>
-        <button id="drkThemeBtn" onclick="changeTheme(false)">Dark Mode</button>
+        <button id="lgtThemeBtn" onclick="changeTheme(1)">Light Mode</button>
+        <button id="drkThemeBtn" onclick="changeTheme(2)">Dark Mode</button>
 
         <script>
             document.getElementById("listArea").addEventListener("click", (event) => {
@@ -75,7 +75,7 @@
 
                 //cookies
                 let currentTheme = getCookie("theme");
-                currentTheme = currentTheme ? currentTheme : true;
+                currentTheme = currentTheme ? currentTheme : 1;
                 changeTheme(currentTheme);
             }
 
@@ -122,8 +122,8 @@
             }
 
             function changeTheme(theme){
-                if (theme){
-                    document.body.style.backgroundColor = "#c6f1ff";
+                if (theme == 1){
+                    document.body.style.backgroundColor = "aliceblue";
                 }
                 else {
                     document.body.style.backgroundColor = "#0d0d20";
