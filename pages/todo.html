@@ -36,7 +36,6 @@
                         let newTaskDiv = document.createElement("div");
                         newTaskDiv.innerHTML += "<p>" + task + " <button class=\"deleteable\">Complete Task!</button></p>";
 
-                        console.log(newTaskDiv);    
                         listArea.appendChild(newTaskDiv);
 
                         document.getElementById("taskInput").value = "";
@@ -68,7 +67,6 @@
 
             function addLocalStorage(task){
                 let currentStorage = JSON.parse(localStorage.getItem("tasks"));
-                console.log(currentStorage);
                 if (!currentStorage){
                     currentStorage = [];
                 }
@@ -77,7 +75,7 @@
             }
 
             function removeLocalStorage(task){
-                let currentStorage = localStorage.getItem("tasks");
+                let currentStorage = JSON.parse(localStorage.getItem("tasks"));
                 if (currentStorage){
                     if (currentStorage.includes(task)){
                         currentStorage.splice(currentStorage.indexOf(task), 1);
