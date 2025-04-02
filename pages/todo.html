@@ -92,7 +92,7 @@
             function checkTaskDuplicate(task){
                 let currentStorage = JSON.parse(localStorage.getItem("tasks"));
                 if (currentStorage){
-                    return currentStorage.includes("task");
+                    return currentStorage.includes(task);
                 }
                 return false;
             }
