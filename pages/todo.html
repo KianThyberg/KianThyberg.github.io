@@ -177,7 +177,7 @@
 
             // generic function to replace " ' < > & with sanitized characters
             function sanitizeString(string){
-                return string.replace(/</g, "&lt").replace(/>/g, "&gt").replace(/"/g, "&quot").replace(/'/g, "&apos").replace(/&/g, "&amp");
+                return string.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/&/g, "&amp;");
             }
 
             // generic function to get the value of a cookie
