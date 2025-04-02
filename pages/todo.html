@@ -102,7 +102,7 @@
             function clearStorage(){
                 localStorage.clear();
                 sessionStorage.clear();
-                document.cookie = "expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;"
+                document.cookie = "theme=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;";
                 window.location.reload();
             }
 
@@ -165,7 +165,7 @@
                     let response = await fetch("https://dog.ceo/api/breeds/image/random");
                     let dog = await response.json();
                     
-                    document.getElementById("dogArea").innerHTML = "<img src=\"" + dog.message + "\" alt=\"Dog\" width=auto height=auto max-width=\"300\" max-height=\"300\">";
+                    document.getElementById("dogArea").innerHTML = "<img src=\"" + dog.message + "\" alt=\"Dog\" max-width=\"300\" max-height=\"300\">";
                 }
                 catch (error){
                     document.getElementById("dogArea").innerHTML = "<p>There was an error in the process of finding a dog.</p>";
