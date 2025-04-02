@@ -77,8 +77,11 @@
             function removeLocalStorage(task){
                 let currentStorage = JSON.parse(localStorage.getItem("tasks"));
                 if (currentStorage){
-                    if (currentStorage.includes(task)){
-                        currentStorage.splice(currentStorage.indexOf(task), 1);
+                    let newStorage = [];
+                    for (let taskToAdd of currentStorage){
+                        if (taskToAdd != task){
+                            newStorage.push(taskToAdd);
+                        }
                     }
                     localStorage.setItem("tasks", JSON.stringify(currentStorage));
                 }
