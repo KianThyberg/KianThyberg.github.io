@@ -83,11 +83,11 @@
                         let currentCount = sessionStorage.getItem("count");
                         if (currentCount){
                             currentCount++;
-                            sessionStorage.setItem("count", currentCount);
                         }
                         else{
-                            sessionStorage.setItem("count", 1);
+                            currentCount = 1;
                         }
+                        sessionStorage.setItem("count", currentCount);
                         document.getElementById("sessionCount").textContent = currentCount + " tasks have been created in this session.";
                     }
                     else {
