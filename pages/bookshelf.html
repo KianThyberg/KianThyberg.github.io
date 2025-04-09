@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Kian's Bookshelf</title>
+        <link rel="stylesheet" href="../stylesheets/style.css">
+    </head>
+    <body>
+        <h1>Kian's Bookshelf</h1>
+        <p>
+            Here's a few books that I've read and enjoyed in the past, classic and modern.
+            Some of them even have covers!
+        </p>
+
+        <script>
+            let listJSONString = '[{"title":"Alice\'s Adventures In Wonderland","year":1865,"author":"Lewis Carroll","genre":"Surrealism","image":["../images/bookCovers/alice.jpg","https://commons.wikimedia.org/wiki/File:Front_cover_Alice_in_Wonderland_(1917)_01.jpg"]},{"title":"Call of The Wild","year":1903,"author":"Jack London","genre":"Drama","image":["../images/bookCovers/callwild.jpg","https://commons.wikimedia.org/wiki/File:JackLondoncallwild.jpg"]},{"title":"The Great Gatsby","year":1925,"author":"F. Scott Fitzgerald","genre":"Drama","image":["../images/bookCovers/gatsby.jpg","https://commons.wikimedia.org/wiki/File:The_Great_Gatsby_Cover_1925_Retouched.jpg"]},{"title":"The Hitchhiker\'s Guide To The Galaxy","year":1979,"author":"Douglas Adams","genre":"Sci-Fi"},{"title":"Scythe","year":2016,"author":"Neal Shusterman","genre":"Dystopia"},{"title":"Renegades","year":2017,"author":"Marissa Meyer","genre":"Sci-Fi"}]';
+
+            class Book{
+                #year;
+                #image;
+                #imageLink;
+
+                constructor(title, year, author, genre, image = ""){
+                    this.title = title;
+                    this.#year = year;
+                    this.author = author;
+                    this.genre = genre;
+                    this.#image = image[0];
+                    this.#imageLink = image[1];
+                }
+
+                get year(){
+                    return this.#year;
+                }
+
+                set year(value){
+                    if (value.match(/[0-9]/g)){
+                        this.#year = value;
+                    }
+                    else{
+                        this.#year = this.#year;
+                    }
+                }
+
+                get image(){
+                    return this.#image;
+                }
+
+                set image(value){
+                    this.#image = value;
+                }
+
+                get imageLink(){
+                    return this.#imageLink;
+                }
+
+                set imageLink(value){
+                    this.#imageLink = value;
+                }
+
+                toString(){
+                    return this.title + "(" + this.year + ")";
+                }
+
+                toHTML(){
+                    let bookElement = document.createElement("p");
+
+                    bookElement.style.clear = "left";
+
+                    let imageArea = document.createElement("div");
+                    if (this.#image){
+                        let imageLink = document.createElement("a");
+                        imageLink.setAttribute("href",this.#imageLink);
+                        imageLink.setAttribute("target","_blank");
+
+                        let image = document.createElement("img");
+                        image.setAttribute("src",this.#image);
+                        image.setAttribute("alt",this.title + " cover image");
+                        image.setAttribute("width", 100);
+                        image.classList.add("image");
+                        imageLink.appendChild(image);
+
+                        imageArea.appendChild(imageLink);
+                    }
+                    bookElement.appendChild(imageArea);
+
+                    let descParagraph = document.createElement("div");
+                    let bold = document.createElement("strong");
+                    bold.textContent = this.title + " by " + this.author;
+                    descParagraph.appendChild(bold);
+
+                    descParagraph.innerHTML += "<p>Year Released: " + this.year + "</p>";
+                    descParagraph.innerHTML += "<p>Genre: " + this.genre + "</p>";
+
+                    if(this.image){
+                        descParagraph.innerHTML += "<br><br><br>";
+                    }
+
+                    bookElement.appendChild(descParagraph);
+
+                    return bookElement;
+                }
+            }
+
+            let jsonData = JSON.parse(listJSONString);
+            for (object of jsonData){
+                let book = new Book(object.title, object.year, object.author, object.genre, object.image);
+                document.body.appendChild(book.toHTML());
+                document.body.appendChild(document.createElement("hr"));
+            }
+
+            let credit = document.createElement("p");
+            credit.textContent = "Public domain images provided by Wikimedia Commons.";
+            document.body.appendChild(credit);
+        </script>
+    </body>
+</html>

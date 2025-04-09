@@ -58,3 +58,10 @@ button:hover{
         opacity: 1;
     }
 }
+
+.image{
+    width: 100px;
+    float: left;
+    clear: left;
+    padding: 10px;
+}
