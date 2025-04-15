@@ -1,0 +1,24 @@
+.body {
+    background-color: red;
+    color: darkred;
+}
+.boardArea {
+    background-color: yellow;
+    color: darkgoldenrod;
+}
+.scoreTile {
+    width: 40px;
+    height: 90px;
+    border: 5px solid black;
+    background-color: green;
+    color: darkgreen;
+    float: left;
+}
+.playTile {
+    width: 40px;
+    height: 40px;
+    border: 5px solid black;
+    background-color: blue;
+    color: darkblue;
+    float: left;
+}
