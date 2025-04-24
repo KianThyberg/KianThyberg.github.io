@@ -1,3 +1,5 @@
+let playing = true;
+
 function setBoard(){
     let board = document.getElementById("boardArea");
 
@@ -10,6 +12,8 @@ function setBoard(){
         playTile.setAttribute("data-index",i);
         playTile.innerHTML = 4;
         board.appendChild(playTile);
+
+        playTile.addEventListener("click", startMovement);
     }
 
     let scoreTile1 = document.createElement("div");
@@ -18,6 +22,7 @@ function setBoard(){
     scoreTile1.style.left = "440px";
     scoreTile1.style.top = "200px";
     scoreTile1.setAttribute("data-index",6);
+    scoreTile1.innerHTML = 0;
 
     board.appendChild(scoreTile1);
 
@@ -30,6 +35,8 @@ function setBoard(){
         playTile.setAttribute("data-index",7+i);
         playTile.innerHTML = 4;
         board.appendChild(playTile);
+
+        playTile.addEventListener("click", startMovement);
     }
 
     let scoreTile2 = document.createElement("div");
@@ -38,6 +45,7 @@ function setBoard(){
     scoreTile2.style.left = "20px";
     scoreTile2.style.top = "200px";
     scoreTile2.setAttribute("data-index",13);
+    scoreTile2.innerHTML = 0;
 
     board.appendChild(scoreTile2);
 }
@@ -45,7 +53,7 @@ function setBoard(){
 function addToScore(playerNum, scoreToAdd){ //adds scoreToAdd to the score of player playerNum
     let scoreIndex = (7 * playerNum) - 1; //will return 6 if turn 1, 13 if turn 2
     let score = document.getElementById("boardArea").children[scoreIndex];
-    score.innerHTML += scoreToAdd;
+    score.innerHTML = parseInt(score.innerHTML) + scoreToAdd;
 }
 
 function checkLanding(spaceIndex){
@@ -59,8 +67,8 @@ function checkLanding(spaceIndex){
                     let opposite = document.getElementById("boardArea").children[12 - spaceIndex];
                     if (opposite.innerHTML > 0){ //and opposite space isn't
                         let capturedStones = 0;
-                        capturedStones += landing.innerHTML;
-                        capturedStones += opposite.innerHTML;
+                        capturedStones += parseInt(landing.innerHTML);
+                        capturedStones += parseInt(opposite.innerHTML);
                         landing.innerHTML = 0;
                         opposite.innerHTML = 0;
 
@@ -70,10 +78,95 @@ function checkLanding(spaceIndex){
             }
             document.getElementById("currentTurn").innerHTML = turn == 1 ? 2 : 1;
         }
-        
+        checkVictory();
     }
     else {
         throw new Error(spaceIndex, "is not a valid landing index.");
+    }
+}
+
+function startMovement(event){
+    if (playing){
+        let tileElement = event.target;
+        let spaceIndex = tileElement.dataset.index;
+        let currentTurn = document.getElementById("currentTurn").innerHTML;
+
+        if (tileElement.innerHTML != 0){
+            if ((spaceIndex < 6 && currentTurn == 1) || (spaceIndex > 6 && currentTurn == 2)){//if space is yours
+                movementStep(tileElement, 0, true);
+            }
+        }
+    }
+}
+
+// tileOver - the current tile the hand is over
+// hand - the remaining stones in your hand
+// isStart - if true: empty starting tile. if false: drop one and carry on
+function movementStep(tileOver, hand, isStart){
+    if (isStart){
+        let newHand = tileOver.innerHTML;
+        tileOver.innerHTML = 0;
+        movementStep(getNextTile(tileOver), newHand, false);
+    }
+    else{
+        tileOver.innerHTML++
+        hand--;
+
+        if (hand > 0){
+            movementStep(getNextTile(tileOver), hand, false);
+        }
+        else{
+            checkLanding(tileOver.dataset.index);
+        }
+    }
+}
+
+function getNextTile(currentTile){
+    let next = currentTile.nextElementSibling
+    if (next){
+        let currentTurn = document.getElementById("currentTurn").innerHTML;
+        if (next.dataset.index == 6 && currentTurn == 2){
+            return next.nextElementSibling;
+        }
+        else if (next.dataset.index == 13 && currentTurn == 1){
+            return document.getElementById("boardArea").children[0];
+        }
+        else {
+            return next;
+        }
+    }
+    else{
+        return document.getElementById("boardArea").children[0];
+    }
+}
+
+function checkVictory(){
+    let clearSide1 = true;
+    let clearSide2 = true;
+    for (tile of document.getElementById("boardArea").children){
+        if (tile.innerHTML > 0){
+            if (tile.dataset.index < 6){
+                clearSide1 = false;
+            }
+            else if (tile.dataset.index > 6 && tile.dataset.index < 13){
+                clearSide2 = false;
+            }
+        }
+    }
+    if (clearSide1 || clearSide2){
+        let scores = document.getElementsByClassName("scoreTile");
+        let winText = document.getElementById("turnIndicator");
+        if (scores[0].innerHTML > scores[1].innerHTML){
+            winText.innerHTML = "Player 1 Wins!";
+        }
+        else if (scores[0].innerHTML < scores[1].innerHTML){
+            winText.innerHTML = "Player 2 Wins!";
+        }
+        else{
+            winText.innerHTML = "Tie Game!";
+        }
+
+        playing = false;
     }
 }
 
