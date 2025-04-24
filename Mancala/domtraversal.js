@@ -2,10 +2,12 @@ let playing = true;
 
 function setBoard(){
     let board = document.getElementById("boardArea");
+    document.getElementById("turnIndicator").style.color = "#d12a3b";
 
     for (let i = 0; i < 6; i++){
         let playTile = document.createElement("div");
         playTile.classList.add("playTile");
+        playTile.classList.add("p1Tile");
         playTile.style.position = "absolute";
         playTile.style.left = (80 + (60 * i)) + "px";
         playTile.style.top = "250px";
@@ -18,6 +20,7 @@ function setBoard(){
 
     let scoreTile1 = document.createElement("div");
     scoreTile1.classList.add("scoreTile");
+    scoreTile1.classList.add("p1Score");
     scoreTile1.style.position = "absolute";
     scoreTile1.style.left = "440px";
     scoreTile1.style.top = "200px";
@@ -29,6 +32,7 @@ function setBoard(){
     for (let i = 0; i < 6; i++){
         let playTile = document.createElement("div");
         playTile.classList.add("playTile");
+        playTile.classList.add("p2Tile");
         playTile.style.position = "absolute";
         playTile.style.left = (380 - (60 * i)) + "px";
         playTile.style.top = "200px";
@@ -41,6 +45,7 @@ function setBoard(){
 
     let scoreTile2 = document.createElement("div");
     scoreTile2.classList.add("scoreTile");
+    scoreTile2.classList.add("p2Score");
     scoreTile2.style.position = "absolute";
     scoreTile2.style.left = "20px";
     scoreTile2.style.top = "200px";
@@ -76,6 +81,7 @@ function checkLanding(spaceIndex){
                     }
                 }
             }
+            document.getElementById("turnIndicator").style.color = turn == 1 ? "#4665e0" : "#d12a3b";
             document.getElementById("currentTurn").innerHTML = turn == 1 ? 2 : 1;
         }
         checkVictory();
@@ -158,12 +164,15 @@ function checkVictory(){
         let winText = document.getElementById("turnIndicator");
         if (scores[0].innerHTML > scores[1].innerHTML){
             winText.innerHTML = "Player 1 Wins!";
+            winText.style.color = "#d12a3b";
         }
         else if (scores[0].innerHTML < scores[1].innerHTML){
             winText.innerHTML = "Player 2 Wins!";
+            winText.style.color = "#4665e0";
         }
         else{
             winText.innerHTML = "Tie Game!";
+            winText.style.color = "white";
         }
 
         playing = false;
